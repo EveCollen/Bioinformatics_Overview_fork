@@ -113,7 +113,6 @@ ln -s ~/data/failing_loudly/4_refs/* 4_refs/*
 Let's now run just the validator script on one of our vcfs:
 
 ```bash
-conda activate CHANGEME
 python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dody.vcfs
 ```
 You should get something like this:
