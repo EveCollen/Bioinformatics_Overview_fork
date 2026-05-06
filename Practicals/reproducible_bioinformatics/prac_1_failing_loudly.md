@@ -362,7 +362,7 @@ Now the order of both the header and the columns of the data section should be s
 
 <details>
 <summary>Answer</summary>
-<ul><li>1. We need to swap the entire column of the data section, not just the header column names. Otherwise, the wrong column will be named incorrectly! Please note also this example is only for teaching purposes. If you ever came across a vcf this messed up, you would to take a break, make a huge cup of coffee, and make a new vcf fresh from the start.</li> </ul>
+<ul><li>1. We need to swap the entire column of the data section, not just the header column names. Otherwise, the wrong column will be named incorrectly! Please note also this example is only for teaching purposes. If you ever came across a vcf this messed up, you would need to take a break, make a huge cup of coffee, and make a new vcf fresh from the start.</li> </ul>
 </details>
 
 
