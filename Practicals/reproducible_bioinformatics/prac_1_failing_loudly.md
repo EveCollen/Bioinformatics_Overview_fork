@@ -241,7 +241,7 @@ Now that the error reads much nicer, let's name the vcf properly to actually fix
 
 ```bash
 mv 1_vcfs/patient_1_dodgy.vcfs 1_vcfs/patient_1_dodgy.vcf
-python3 ./vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
+python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
 ```
 Woo-hoo! Now onwards to the next error!
 
