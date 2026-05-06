@@ -253,7 +253,7 @@ Traceback (most recent call last):
   File "/Users/evelyn/failing_loudly/Practicals/failing_loudly/./vcf_validator.py", line 69, in main
     raise Exception("Cannot have data lines preceding header")
 ```
-Ah, this is now interesting. If you look at the bottom of the traceback again, you can see the  Exception causing the new problem. It seems our vcf may have some formatting issues.
+Ah, this is now interesting. If you look at the bottom of the traceback again, you can see the  "exception" causing the new problem. It seems our vcf may have some formatting issues.
 
 
 ## **3. Validating the formatting of the input itself**
@@ -291,7 +291,7 @@ You can see line 21 is an erroneous copy of line 26. Let's go ahead and delete l
 Close and save nano, run the validator again, and await the next error message:
 
 ```bash
-python3 ./vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
+python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
 ```
 
 ### 3.2 Fixing the vcf format one error at a time
@@ -422,13 +422,13 @@ Note the HGVS nomenclature follows the cdna transcript, and here it is in revers
 
 1. The validator script checks a bunch of conditions and raises an error if they are not satisfied. In the first part of the script, if you look at the lines immediately following where these errors are raised, you can see extra 'else - print' statements have been commented out (lines 12 and 20). What do you think these else statements would do? Try removing the comments on the 'elses'/'prints' on lines 12 and 20 and also the series of 'prints' at the bottom of the script, and running the script again on the dodgy vcf: 
 ```bash
-python3 ./vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
+python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
 ```
 
 2. What output did you get? Do you think it is useful to know what checks have been put in place, and that they have passed? Make another directory and write this information to a log. Detailed logs are very useful when debugging as then we can pinpoint what worked and which checks passed before the error. 
 ```bash
 mkdir -p ~/Practical_Failing_Loudly/5_logs
-python3 ./vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf > 5_logs/vcf_validation.log
+python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf > 5_logs/vcf_validation.log
 ```
 
 
