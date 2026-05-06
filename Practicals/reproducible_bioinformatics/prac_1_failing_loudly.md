@@ -298,7 +298,7 @@ python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
 
 There are a series of more problems with the vcf. I have given you some instuctions below on how to fix each error, but the errors may not appear in the same order as the order of these solutions, so you will have to go through this list until you find the solution that matches each error. Keep 'fixing' the vcf and matching solutions to the errors, then rerunning the validator script, until no more exceptions are raised. 
 
-**Exception: Header with columns should not be followed by metadata**
+**Exception: ("Header with columns should not be followed by metadata")**
 
 *Fix*:
 The offending line is at line 22 of the vcf, as you can see below.
