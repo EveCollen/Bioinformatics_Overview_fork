@@ -299,6 +299,7 @@ python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
 There are a series of more problems with the vcf. I have given you some instuctions below on how to fix each error, but the errors may not appear in the same order as the order of these solutions, so you will have to go through this list until you find the solution that matches each error. Keep 'fixing' the vcf and matching solutions to the errors, then rerunning the validator script, until no more exceptions are raised. 
 
 **Exception: Header with columns should not be followed by metadata**
+
 *Fix*:
 The offending line is at line 22 of the vcf, as you can see below.
 
@@ -317,6 +318,7 @@ Metadata should never come after the main header. Move this line up so that it c
 ```
 
 **Exception("Too many main headers are present in vcf file")**
+
 *Fix*:
 We can't have two headers, so go ahead and open the vcf and remove the first header, at line 21. After your edit, your vcf should look like this:
 
@@ -328,6 +330,7 @@ We can't have two headers, so go ahead and open the vcf and remove the first hea
 
 
 **Exception("A column is missing from the vcf main header")**
+
 *Fix*:
 Use nano to open the vcf file and go to line 21, which just has "CHROM". That's not right as a vcf header need to have at least 8 columns in the main header. Remove this line entirely. After your edits, lines 20-24 should now look like this:
 ```
@@ -339,6 +342,7 @@ Use nano to open the vcf file and go to line 21, which just has "CHROM". That's 
  ```
 
 **Exception("The order of columns in the vcf is not correct")**
+
 *Fix*: 
 The "FILTER" and "INFO" column have gotten swapped somehow. Run this awk command to switch them back:
 
