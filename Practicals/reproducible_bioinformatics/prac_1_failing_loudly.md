@@ -35,8 +35,7 @@ Remember the VM is essentially a program that is running on a server but which b
 2. Write some error messages and make them loud and understandable
 3. Relinquishing the fear to try things - just do it, and expect it not to work if you're new at it. It's normal!
 4. Staring the problem in the face
-5. Learn the basics of the vim text editor
-6. Review vcf format
+5. Review vcf format
 
 ### 1.3 About our dataset
 
@@ -74,16 +73,15 @@ When a program or bioinformatics tool breaks, similarly, you will need to carefu
 
 We are going to start by focussing on one script at a time to keep it simple, and then string the 3 scripts together in the next practical. 
 
-### 1.5 Getting ready to look into scripts with vim
+### 1.5 Getting data and scripts ready
 
-First, let's get into debug mode! We're going to be staring at scripts, so let's make sure our text editor (in this case vim) gives us line numbers. You can also use nano if you prefer, but vim can be a bit easier for viewing line numbers.
+First, let's get into debug mode! We're going to be staring at scripts, so let's make sure our text editor (in this case nano) gives us line numbers. You can do this by adding the -l flag to the command. Here's an example nano command (no need to run it, it's for illustrative purposes):
 
 
 ```bash
-vim ~/.vim
+nano -l ~/batch_test.txt
 ```
-Press ESC, then "i" key, then type "set number" (note don't type in any of the quotation marks here! They are just to denote what keys to press). Then to exit and save, press ESC, then type ":wq" (which should appear in the bottom left hand corner) then enter. 
-
+If you did run that nano command, exit it, and run the following in terminal:
 
 load software
 ```bash
@@ -100,10 +98,10 @@ copy scripts and data and also make symlinks
 
 ```bash
 cp ~/data/failing_loudly/0_scripts/* 0_scripts/
-cp ~/data/failing_loudly/patient_1_dodgy.vcfs 1_vcfs/
-ln -s ~/data/failing_loudly/*.vcf 1_vcfs/
-ln -s ~/data/failing_loudly/*.bam 2_bam/
-ln -s ~/data/failing_loudly/4_refs/* 4_refs/*
+cp ~/data/failing_loudly/1_vcfs/patient_1_dodgy.vcfs 1_vcfs/
+ln -s ~/data/failing_loudly/1_vcfs/*.vcf 1_vcfs/
+ln -s ~/data/failing_loudly/2_bam/*.bam 2_bam/
+ln -s ~/data/failing_loudly/4_refs/* 4_refs/
 ```
 
 ## **2. Validating input requirements**
@@ -134,7 +132,7 @@ Working our way bottom to top through the traceback, you can see the script that
 Now that we've pinpointed our error, let's open the script and look at lines 9-11:
 
 ```bash
-vim ./0_scripts/vcf_validator.py
+nano -l ./0_scripts/vcf_validator.py
 ```
 You should see something like this in your script:
 
@@ -144,9 +142,8 @@ You should see something like this in your script:
 11    raise Exception("Unknown Error")
 ```
 
-From the code, we can see it seems the path to the file is missing. We are developing this script, so let's go ahead and improve the error message. While you are still in the vim session, press ESC, then "i" key, then use the arrows to get the cursor to line 9. Change "Unknown Error" to "Error: Could not find any existing vcf file". Press ESC, then ":wq" to save, then enter.
+From the code, we can see it seems the path to the file is missing. We are developing this script, so let's go ahead and improve the error message. At line 9 of the script, change "Unknown Error" to "Error: Could not find any existing vcf file". Save your changes.
 
-(if you make a mistake in vim and need to exit without saving, just press ESC, then type ":q!", then enter. This will get you out of the file without modifying any content)
 
 Now let's run it again!
 
@@ -213,10 +210,10 @@ Again, another unhelpful error message. Working our way from the bottom, the err
 
 ### 2.2 Checking if the input is a vcf
 
-Most input formats are denoted by their extensions, eg .fastq, .bam, .csv. A good sanity check in your scripts is to check if the extension matches what you expect. Let's open the script again with vim: 
+Most input formats are denoted by their extensions, eg .fastq, .bam, .csv. A good sanity check in your scripts is to check if the extension matches what you expect. Let's open the script again with nano: 
 
 ```bash
-vim ./0_scripts/vcf_validator.py
+nano -l ./0_scripts/vcf_validator.py
 ```
 Our previous error message told us to go to line 19, so let's quickly go there and have a look. You should see this: 
 
@@ -226,7 +223,7 @@ Our previous error message told us to go to line 19, so let's quickly go there a
 Again, this is not very useful information. Press ESC, then "i", then use the arrows to go to line 19 and change "Unknown Error number 2" to something more useful. This time it's your turn to come up with a nice error message that tells us that the vcf extension is not right. Bear in mind when writing a good error message, best practice is to ensure it is providing as much information and context as possible pertaining to the issue, while still being concise and specific, and ideally something actionable. 
 
 
-When you're done, press ESC, then ":wq" to save your changes, then enter. Run the script again and enjoy a much better articulated error message:
+When you're done, save your changes, exit nano, run the script again and enjoy a much better articulated error message:
 
 ```bash
 python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcfs
@@ -244,7 +241,7 @@ Now that the error reads much nicer, let's name the vcf properly to actually fix
 
 ```bash
 mv 1_vcfs/patient_1_dodgy.vcfs 1_vcfs/patient_1_dodgy.vcf
-python3 ./vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
+python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
 ```
 Woo-hoo! Now onwards to the next error!
 
@@ -256,24 +253,24 @@ Traceback (most recent call last):
   File "/Users/evelyn/failing_loudly/Practicals/failing_loudly/./vcf_validator.py", line 69, in main
     raise Exception("Cannot have data lines preceding header")
 ```
-Ah, this is now interesting. If you look at the bottom of the traceback again, you can see the  Exception causing the new problem. It seems our vcf may have some formatting issues.
+Ah, this is now interesting. If you look at the bottom of the traceback again, you can see the  "exception" causing the new problem. It seems our vcf may have some formatting issues.
 
 
 ## **3. Validating the formatting of the input itself**
 
 ### 3.1 Checking if the vcf is correctly formatted
 
-As you know, the VCF format has some key specifications that must be adhered to, and that will crash various bioinformatics tools if not. The 'patient_1_dodgy.vcf' has some key issues that will crash our validator script, so we are going to go ahead and modify this vcf file directly with vim and awk to satisfy the validator. In the real world, you would usually never do this, you would probably just go back to the source of your dodgy vcf and find out what corrupted it in the first instance.
+As you know, the VCF format has some key specifications that must be adhered to, and that will crash various bioinformatics tools if not. The 'patient_1_dodgy.vcf' has some key issues that will crash our validator script, so we are going to go ahead and modify this vcf file directly with a text editor and awk to satisfy the validator. In the real world, you would usually never do this, you would probably just go back to the source of your dodgy vcf and find out what corrupted it in the first instance.
 
 If you need a refresher, here are the vcf file format specifications: 
 
 [VCF file format spec](https://samtools.github.io/hts-specs/VCFv4.2.pdf)
 
 
-The first error you should notice is "Cannot have data lines preceding header". If you open up the vcf in vim or nano, you may indeed notice an issue, in that one of the lines before the actual main header (starting with #CHROM) is a data line (at line 21, starting with "chr1" and ends with "PASS").
+The first error you should notice is "Cannot have data lines preceding header". If you open up the vcf in nano, you may indeed notice an issue, in that one of the lines before the actual main header (starting with #CHROM) is a data line (at line 21, starting with "chr1" and ends with "PASS").
 
 ```bash
-vim 1_vcfs/patient_1_dodgy.vcf
+nano -l 1_vcfs/patient_1_dodgy.vcf
 ```
 
 Lines 20-26  look like this:
@@ -291,17 +288,18 @@ Lines 20-26  look like this:
 You can see line 21 is an erroneous copy of line 26. Let's go ahead and delete line 21. After deleting it, the new line 21 should now be "#CHROM'. 
  
 
-Close and save vim (ESC, then type "wq", then enter), run the validator again, and await the next error message:
+Close and save nano, run the validator again, and await the next error message:
 
 ```bash
-python3 ./vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
+python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
 ```
 
 ### 3.2 Fixing the vcf format one error at a time
 
 There are a series of more problems with the vcf. I have given you some instuctions below on how to fix each error, but the errors may not appear in the same order as the order of these solutions, so you will have to go through this list until you find the solution that matches each error. Keep 'fixing' the vcf and matching solutions to the errors, then rerunning the validator script, until no more exceptions are raised. 
 
-**Exception: Header with columns should not be followed by metadata
+**Exception: ("Header with columns should not be followed by metadata")**
+
 *Fix*:
 The offending line is at line 22 of the vcf, as you can see below.
 
@@ -319,7 +317,8 @@ Metadata should never come after the main header. Move this line up so that it c
  22 #CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  Patient_A
 ```
 
-**Exception("Too many main headers are present in vcf file")
+**Exception("Too many main headers are present in vcf file")**
+
 *Fix*:
 We can't have two headers, so go ahead and open the vcf and remove the first header, at line 21. After your edit, your vcf should look like this:
 
@@ -330,9 +329,10 @@ We can't have two headers, so go ahead and open the vcf and remove the first hea
 ```
 
 
-*Exception("A column is missing from the vcf main header")
+**Exception("A column is missing from the vcf main header")**
+
 *Fix*:
-Use vim or nano to open the vcf file and go to line 21, which just has "CHROM". That's not right as a vcf header need to have at least 8 columns in the main header. Remove this line entirely. After your edits, lines 20-24 should now look like this:
+Use nano to open the vcf file and go to line 21, which just has "CHROM". That's not right as a vcf header need to have at least 8 columns in the main header. Remove this line entirely. After your edits, lines 20-24 should now look like this:
 ```
 20 ##bcftools_viewVersion=1.10.2+htslib-1.17
  21 #CHROM  POS     ID      REF     ALT     QUAL    FILTER  INFO    FORMAT  Patient_A
@@ -341,7 +341,8 @@ Use vim or nano to open the vcf file and go to line 21, which just has "CHROM". 
  24 chr1    43349345        .       T       A       278     SAMPLE=Patient_A;TYPE=SNV;DP=4197;VD=171;AF=0.0407;BIAS=2:2;REFBIAS=2012:2002;VARBIAS=86:85;PMEAN=20;PSTD=1;QUAL=37.5;QS        TD=1;SBF=1;ODDRATIO=1.00674;MQ=60;SN=27.5;HIAF=0.0399;ADJAF=0;SHIFT3=1;MSI=2;MSILEN=1;NM=1.3;HICNT=165;HICOV=4136;LSEQ=CTGCTGCTGAGGTGGCAGTT;RSEQ=CCTGCACACTACAGGTACCG;GDAMP=    1;TL    AMP=1;NCAMP=0;AMPFLAG=0 PASS    GT:DP:VD:AD:AF:RD:ALD:FT        0/1:4197:171:4014,171:0.0407:2012,2002:86,85:PASS
  ```
 
-Exception("The order of columns in the vcf is not correct")
+**Exception("The order of columns in the vcf is not correct")**
+
 *Fix*: 
 The "FILTER" and "INFO" column have gotten swapped somehow. Run this awk command to switch them back:
 
@@ -357,7 +358,7 @@ Now the order of both the header and the columns of the data section should be s
 ```
 
 **Question:**
-1. Why did we need to use the awk command, instead of just going in with vim or nano and swapping only the column names?
+1. Why did we need to use the awk command, instead of just going in with nano and swapping only the column names?
 
 <details>
 <summary>Answer</summary>
@@ -425,13 +426,13 @@ Note the HGVS nomenclature follows the cdna transcript, and here it is in revers
 
 1. The validator script checks a bunch of conditions and raises an error if they are not satisfied. In the first part of the script, if you look at the lines immediately following where these errors are raised, you can see extra 'else - print' statements have been commented out (lines 12 and 20). What do you think these else statements would do? Try removing the comments on the 'elses'/'prints' on lines 12 and 20 and also the series of 'prints' at the bottom of the script, and running the script again on the dodgy vcf: 
 ```bash
-python3 ./vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
+python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf
 ```
 
 2. What output did you get? Do you think it is useful to know what checks have been put in place, and that they have passed? Make another directory and write this information to a log. Detailed logs are very useful when debugging as then we can pinpoint what worked and which checks passed before the error. 
 ```bash
 mkdir -p ~/Practical_Failing_Loudly/5_logs
-python3 ./vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf > 5_logs/vcf_validation.log
+python3 ./0_scripts/vcf_validator.py --input_vcf 1_vcfs/patient_1_dodgy.vcf > 5_logs/vcf_validation.log
 ```
 
 
