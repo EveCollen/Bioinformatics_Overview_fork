@@ -146,7 +146,7 @@ Aha! An error! Lucky for us, we eat errors for breakfast. Notice, the GATK tool 
 gatk CheckFingerprint -R 4_refs/Homo_sapiens_assembly38.fasta -I 1_vcfs/Patient_A.vcf.gz --GENOTYPES 1_vcfs/counterpart_vcfs/Patient_A_counterpart.gatk.hg38.vcf.gz --HAPLOTYPE_MAP 4_refs/HaplotypeMap.vcf --GENOTYPE_LOD_THRESHOLD 0 --SUMMARY_OUTPUT 3_reports/1_fingerprint_check/Patient_A.fingerprint_summary.tsv --DETAIL_OUTPUT 3_reports/1_fingerprint_check/Patient_A.fingerprint_detailMetrics.tsv
 ```
 
-<details>
+</details>
 
 
 Well done! If the command worked, you should see in your ouput Patient_A: LOD = 19.548716624813856. 
@@ -292,7 +292,7 @@ bcftools mpileup --count-orphans --no-BAQ \
 | bcftools +fill-tags -O v -o 3_reports/3_varcall_check/Patient_A_bcftools_check.vcf -- -t FORMAT/VAF
 ```
 
-<details>
+</details>
 
 
 Great job! Run the following to compare the call made by Vardict to the one we just made with bcftools:
