@@ -242,9 +242,9 @@ This script classifies sample contamination status as "OK" if the number of low 
 </details>
 
 
-## **3. Errors with variant calling**
+## **4. Errors with variant calling**
 
-### 3.2 Run bcftools as a second variant caller check 
+### 4.1 Run bcftools as a second variant caller check 
 
 No variant caller is perfect, and even the best and more robust programs can make mistakes or have inconsistencies. The caller we used for the DPYD variants was Vardict, which is known to be a very good caller for amplicon data that almost never misses. But even it can have problems - if you're interested, take a quick glance at one of Vardict's issue pages on Github:
 
@@ -302,7 +302,7 @@ grep 97573863 3_reports/3_varcall_check/Patient_A_bcftools_check.vcf
 ```
 Did they make the same call?
 
-### 3.2 Run bcftools for all the samples
+### 4.2 Run bcftools for all the samples
 
 
 ```bash
@@ -322,9 +322,9 @@ You can list the new vcfs you've just variant called. Hopefully, they accord wit
 ll 3_reports/3_varcall_check/*_bcftools_check.vcf
 ```
 
-## **4. Running the full pipeline**
+## **5. Running the full pipeline**
 
-### 4.1 Outputting QC reports to summarise pass/fail
+### 5.1 Outputting QC reports to summarise pass/fail
 
 Well done for making it this far! That was quite a lot, and it gets very tedious to check each sample one by one. Let's finally run our smooth pipeline, which will do all this hard work for us and give us a nice summary file, with pass/fail info for the steps that matter. 
 
@@ -345,7 +345,7 @@ variant call second-check - variant must be called by our second caller, bcftool
 contamination check - counterpart vcf must have no more than 3 low-vaf SNPs
 fingerprint check - must be positive
 
-### 4.2 Outputting QC reports to summarise pass/fail
+### 5.2 Outputting QC reports to summarise pass/fail
 
 Remember last week when we actively broke some python scripts? You may remember the error message from the validator script was relatively straightforward. What will happen if we run a non-existant vcf through the pipeline?
 
