@@ -17,8 +17,7 @@ It's important to optimise the variant-tailored dosage, as the standard dose tha
 
 ![alt text](images_and_refs/dpyd2.jpg)
 
-Figure 1. The relative risk of toxicity in those with versus without the
-specified variant when treated with full or individualised dose (taken from [Sonic Genetics](https://www.sonicgenetics.com.au/))
+Figure 1. The relative risk of toxicity in those with specified variants when treated with full or individualised dose (taken from [Sonic Genetics](https://www.sonicgenetics.com.au/))
 
 ### 1.1 Reminder about virtual Machines
 
