@@ -249,7 +249,7 @@ This script classifies sample contamination status as "OK" if the number of low 
 
 No variant caller is perfect, and even the best and more robust programs can make mistakes or have inconsistencies. The caller we used for the DPYD variants was Vardict, which is known to be a very good caller for amplicon data that almost never misses. But even it can have problems - if you're interested, take a quick glance at one of Vardict's issue pages on Github:
 
-[text](https://github.com/AstraZeneca-NGS/VarDictJava/issues/81)
+[vardict_calling_issue](https://github.com/AstraZeneca-NGS/VarDictJava/issues/81)
 
 As I've been emphasising constantly, making the right call is absolutely crucial for the patients, and once we've established the sample is the right one, the next crucial step is to ascertain that the right call was made. We can go ahead and double-check it with the aid of a totally different variant caller: bcftools.
 
