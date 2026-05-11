@@ -397,8 +397,8 @@ Depending on the configuration of alleles, and whether those alleles have zero, 
 <details>
 <summary>Answers</summary>
 <ul><li>1. Intermediate metaboliser </li>
-<ul><li>2. Probably a minimum dosage or an alternative therapy </li> 
-<ul><li>3. Basically, there are two SNPs in linkage disequilibirum, the tag SNP and the causal SNP. In rare cases, the linkage between them could break an therefore you have a tag SNP without the causal SNP, and vice versa.  </li> </ul>
+<li>2. Probably a minimum dosage or an alternative therapy </li> 
+<li>3. Basically, there are two SNPs in linkage disequilibirum, the tag SNP and the causal SNP. In rare cases, the linkage between them could break an therefore you have a tag SNP without the causal SNP, and vice versa.  </li> </ul>
 </details>
 
 
